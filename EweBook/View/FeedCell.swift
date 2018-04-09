@@ -14,11 +14,11 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var heart: UIImageView!
     @IBOutlet weak var postImg: UIImageView!
-    @IBOutlet weak var postText: UITextView!
+    @IBOutlet weak var postCaption: UITextView!
     @IBOutlet weak var likesCount: UILabel!
     
     
-    func configureCell() {
+    func configureCell(post: Post) {
         
     }
 

@@ -280,7 +280,7 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filled-heart" translatesAutoresizingMaskIntoConstraints="NO" id="fmy-8y-5Hu">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty-heart" translatesAutoresizingMaskIntoConstraints="NO" id="fmy-8y-5Hu">
                                                                             <rect key="frame" x="263" y="0.0" width="50" height="50"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="50" id="J63-ba-tlD"/>
@@ -344,8 +344,8 @@
                                         <connections>
                                             <outlet property="heart" destination="fmy-8y-5Hu" id="xa7-we-SUI"/>
                                             <outlet property="likesCount" destination="e1N-dD-jQW" id="Thh-Fu-OYw"/>
+                                            <outlet property="postCaption" destination="7JP-8I-Vc0" id="Vfc-m3-i3z"/>
                                             <outlet property="postImg" destination="Nbi-8I-aAY" id="fJc-Ss-0gf"/>
-                                            <outlet property="postText" destination="7JP-8I-Vc0" id="Vfc-m3-i3z"/>
                                             <outlet property="userThumb" destination="dSl-iP-DpA" id="Ll6-OK-Cwr"/>
                                             <outlet property="username" destination="Khg-Uf-ddS" id="ji0-vw-RjV"/>
                                         </connections>
@@ -382,10 +382,10 @@
         <image name="4-20" width="289" height="400"/>
         <image name="add-image" width="88" height="88"/>
         <image name="add-post" width="88" height="88"/>
+        <image name="empty-heart" width="70" height="70"/>
         <image name="ewe" width="200" height="197"/>
         <image name="ewebook" width="321" height="101"/>
         <image name="f" width="352" height="328"/>
-        <image name="filled-heart" width="70" height="70"/>
         <image name="me" width="1200" height="1200"/>
         <image name="sign-out" width="92" height="65"/>
     </resources>
