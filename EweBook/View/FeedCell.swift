@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class FeedCell: UITableViewCell {
 
@@ -21,6 +22,29 @@ class FeedCell: UITableViewCell {
     func configureCell(post: Post) {
         postCaption.text = post.caption
         likesCount.text = "\(post.likes)"
+        
+        if let url = post.imageUrl {
+            if let img = FeedVC.imageCache.object(forKey: url as NSString) {
+                self.postImg.image = img
+            } else {
+                let ref = Storage.storage().reference(forURL: url)
+                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                    if error != nil {
+                        print("Can't download image from Firebase storage: \(error.debugDescription)")
+                    } else {
+                        print("Image downloaded from Firebase storage")
+                        if let imgData = data {
+                            if let img = UIImage(data: imgData) {
+                                self.postImg.image = img
+                                FeedVC.imageCache.setObject(img, forKey: url as NSString)
+                            }
+                        }
+                    }
+                })
+            }
+        } else {
+            self.postImg.isHidden = true
+        }
     }
 
 }

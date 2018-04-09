@@ -18,6 +18,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
+    static var imageCache: NSCache<NSString, UIImage> = NSCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
         DataService.dataSer.REF_POSTS.observe(.value) { (snapshots) in
             if let snapshots = snapshots.children.allObjects as? [DataSnapshot] {
+                self.posts = [Post]()
                 for post in snapshots {
                     if let postDict = post.value as? Dictionary<String, Any> {
                         self.posts.append(Post(postKey: post.key, postData: postDict))
