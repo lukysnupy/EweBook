@@ -11,11 +11,15 @@ import AVFoundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Firebase
+import FirebaseAuth
+import Toaster
 
 class SignInVC: UIViewController {
     
     var musicPlayer: AVAudioPlayer!
-
+    @IBOutlet weak var emailField: RoundedTextField!
+    @IBOutlet weak var passwordField: RoundedTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +65,26 @@ class SignInVC: UIViewController {
     
     @IBAction func signInBtnPressed(_ sender: Any) {
         musicPlayer.play()
+        if let email = emailField.text, let pass = passwordField.text {
+            Auth.auth().signIn(withEmail: email, password: pass, completion: { (user, error) in
+                if error == nil {
+                    print("Successfully authenticated with Firebase using email")
+                } else {
+                    Auth.auth().createUser(withEmail: email, password: pass, completion: { (user, error) in
+                        if error != nil {
+                            let appereance = ToastView.appearance()
+                            appereance.bottomOffsetPortrait = 90
+                            Toast(text: "Wrong password..", duration: Delay.long).show()
+                            self.emailField.text = ""
+                            self.passwordField.text = ""
+                            print("Unable to authenticate with Firebase using email")
+                        } else {
+                            print("New user was created and authenticated with Firebase using email")
+                        }
+                    })
+                }
+            })
+        }
     }
     
 }
