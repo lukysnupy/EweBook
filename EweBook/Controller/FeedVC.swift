@@ -19,6 +19,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

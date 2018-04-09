@@ -69,7 +69,7 @@ class SignInVC: UIViewController {
                 print("Can't authenticate with Firebase: \(error.debugDescription)")
             } else {
                 print("Successfully authenticated with Firebase: \(user?.email ?? "")")
-                self.completeSignIn(user: user)
+                self.completeSignIn(user: user, provider: credential.provider)
             }
         }
     }
@@ -80,7 +80,7 @@ class SignInVC: UIViewController {
             Auth.auth().signIn(withEmail: email, password: pass, completion: { (user, error) in
                 if error == nil {
                     print("Successfully authenticated with Firebase using email")
-                    self.completeSignIn(user: user)
+                    self.completeSignIn(user: user, provider: nil)
                 } else {
                     Auth.auth().createUser(withEmail: email, password: pass, completion: { (user, error) in
                         if error != nil {
@@ -92,7 +92,7 @@ class SignInVC: UIViewController {
                             print("Unable to authenticate with Firebase using email")
                         } else {
                             print("New user was created and authenticated with Firebase using email")
-                            self.completeSignIn(user: user)
+                            self.completeSignIn(user: user, provider: nil)
                         }
                     })
                 }
@@ -100,8 +100,13 @@ class SignInVC: UIViewController {
         }
     }
     
-    func completeSignIn(user: User?) {
+    func completeSignIn(user: User?, provider: String?) {
         if let user = user {
+            if let provider = provider {
+                DataService.dataSer.createFireDBUser(uid: user.uid, provider: provider)
+            } else {
+                DataService.dataSer.createFireDBUser(uid: user.uid, provider: user.providerID)
+            }
             let keychainResult = KeychainWrapper.standard.set(user.uid, forKey: KEY_UID)
             print("Data saved to keychain: \(keychainResult)")
             performSegue(withIdentifier: "DirectToFeed", sender: nil)
