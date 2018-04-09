@@ -19,7 +19,8 @@ class FeedCell: UITableViewCell {
     
     
     func configureCell(post: Post) {
-        
+        postCaption.text = post.caption
+        likesCount.text = "\(post.likes)"
     }
 
 }

@@ -10,16 +10,24 @@ import UIKit
 import SwiftKeychainWrapper
 import Firebase
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var postImage: RoundedImgView!
+    @IBOutlet weak var postCaption: UITextField!
+    
     var posts = [Post]()
+    var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
         
         DataService.dataSer.REF_POSTS.observe(.value) { (snapshots) in
             if let snapshots = snapshots.children.allObjects as? [DataSnapshot] {
@@ -48,7 +56,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         return FeedCell()
     }
-
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            postImage.image = image
+        } else {
+            print("No valid image selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func postBtnPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func addImagePressed(_ sender: Any) {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     @IBAction func signOutPressed(_ sender: Any) {
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         print("ID removed from keychain: \(keychainResult)")
