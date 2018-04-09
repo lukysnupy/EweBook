@@ -101,8 +101,8 @@ class SignInVC: UIViewController {
     
     func completeSignIn(user: User?) {
         if let user = user {
-            let keychain = KeychainWrapper.standard.set(user.uid, forKey: KEY_UID)
-            print("Data saved to keychain: \(keychain)")
+            let keychainResult = KeychainWrapper.standard.set(user.uid, forKey: KEY_UID)
+            print("Data saved to keychain: \(keychainResult)")
             performSegue(withIdentifier: "DirectToFeed", sender: nil)
         }
     }

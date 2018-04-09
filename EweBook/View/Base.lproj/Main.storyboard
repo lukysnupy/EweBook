@@ -163,18 +163,67 @@
                     <view key="view" contentMode="scaleToFill" id="4x8-ts-afW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsw-W0-Z06">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ewe" translatesAutoresizingMaskIntoConstraints="NO" id="bKM-ZS-Aa6">
+                                        <rect key="frame" x="306" y="28" width="39" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="Lso-qq-bZ7"/>
+                                            <constraint firstAttribute="width" constant="39" id="Lv8-He-fKd"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ewebook" translatesAutoresizingMaskIntoConstraints="NO" id="0Tj-cb-beE">
+                                        <rect key="frame" x="88" y="28" width="210" height="34"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekY-Q5-g0V">
+                                        <rect key="frame" x="8" y="40" width="30" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="NJf-45-r3x"/>
+                                            <constraint firstAttribute="width" constant="30" id="TYB-vK-cXU"/>
+                                        </constraints>
+                                        <state key="normal" image="sign-out"/>
+                                        <connections>
+                                            <action selector="signOutPressed:" destination="eZV-3Q-qaB" eventType="touchUpInside" id="kLt-UB-5FD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.7471148984" green="0.22569095889999999" blue="0.22569095889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ekY-Q5-g0V" firstAttribute="leading" secondItem="wsw-W0-Z06" secondAttribute="leading" constant="8" id="6Ao-dF-2iC"/>
+                                    <constraint firstItem="bKM-ZS-Aa6" firstAttribute="leading" secondItem="0Tj-cb-beE" secondAttribute="trailing" constant="8" id="Aak-YI-Usn"/>
+                                    <constraint firstItem="0Tj-cb-beE" firstAttribute="top" secondItem="wsw-W0-Z06" secondAttribute="top" constant="28" id="Gy7-fV-XXN"/>
+                                    <constraint firstAttribute="bottom" secondItem="ekY-Q5-g0V" secondAttribute="bottom" constant="8" id="I5Z-3y-BgQ"/>
+                                    <constraint firstItem="0Tj-cb-beE" firstAttribute="leading" secondItem="ekY-Q5-g0V" secondAttribute="trailing" constant="50" id="Ra2-hO-Fpm"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Tj-cb-beE" secondAttribute="bottom" constant="8" id="Y11-am-Q49"/>
+                                    <constraint firstAttribute="bottom" secondItem="bKM-ZS-Aa6" secondAttribute="bottom" constant="8" id="ngT-11-7WH"/>
+                                    <constraint firstAttribute="height" constant="70" id="vUs-23-ffi"/>
+                                    <constraint firstAttribute="trailing" secondItem="bKM-ZS-Aa6" secondAttribute="trailing" constant="30" id="zEz-nj-6Cp"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wsw-W0-Z06" firstAttribute="trailing" secondItem="rlT-9g-wYH" secondAttribute="trailing" id="6TM-vr-Xod"/>
+                            <constraint firstItem="wsw-W0-Z06" firstAttribute="top" secondItem="4x8-ts-afW" secondAttribute="top" id="77X-Ym-7TS"/>
+                            <constraint firstItem="wsw-W0-Z06" firstAttribute="leading" secondItem="rlT-9g-wYH" secondAttribute="leading" id="9j7-l3-2yr"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="rlT-9g-wYH"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="GoToSignIn" id="7Lx-3P-Zxc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8Q-dE-csy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="937" y="118"/>
+            <point key="canvasLocation" x="900" y="118"/>
         </scene>
     </scenes>
     <resources>
         <image name="ewe" width="200" height="197"/>
         <image name="ewebook" width="321" height="101"/>
         <image name="f" width="352" height="328"/>
+        <image name="sign-out" width="92" height="65"/>
     </resources>
 </document>
