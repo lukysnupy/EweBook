@@ -149,11 +149,27 @@
                     <connections>
                         <outlet property="emailField" destination="FmL-Tp-MdK" id="9Bk-Ch-sib"/>
                         <outlet property="passwordField" destination="RVq-LE-h8E" id="zHR-kk-a3n"/>
+                        <segue destination="eZV-3Q-qaB" kind="show" identifier="DirectToFeed" id="nMW-AF-AYy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="118.29085457271366"/>
+        </scene>
+        <!--FeedVC-->
+        <scene sceneID="AX9-E0-mxf">
+            <objects>
+                <viewController id="eZV-3Q-qaB" customClass="FeedVC" customModule="EweBook" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4x8-ts-afW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="rlT-9g-wYH"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t8Q-dE-csy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="937" y="118"/>
         </scene>
     </scenes>
     <resources>

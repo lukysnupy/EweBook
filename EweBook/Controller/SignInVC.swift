@@ -13,6 +13,7 @@ import FBSDKLoginKit
 import Firebase
 import FirebaseAuth
 import Toaster
+import SwiftKeychainWrapper
 
 class SignInVC: UIViewController {
     
@@ -26,9 +27,17 @@ class SignInVC: UIViewController {
         initBah()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
+            performSegue(withIdentifier: "DirectToFeed", sender: nil)
+        }
+    }
+    
     func initBah() {
         let path = Bundle.main.path(forResource: "bah", ofType: "wav")
         do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(AVAudioSessionCategoryPlayback)
             musicPlayer = try AVAudioPlayer(contentsOf: URL(string: path!)!)
             musicPlayer.prepareToPlay()
         } catch let err as NSError {
@@ -59,6 +68,7 @@ class SignInVC: UIViewController {
                 print("Can't authenticate with Firebase: \(error.debugDescription)")
             } else {
                 print("Successfully authenticated with Firebase: \(user?.email ?? "")")
+                self.completeSignIn(user: user)
             }
         }
     }
@@ -69,22 +79,36 @@ class SignInVC: UIViewController {
             Auth.auth().signIn(withEmail: email, password: pass, completion: { (user, error) in
                 if error == nil {
                     print("Successfully authenticated with Firebase using email")
+                    self.completeSignIn(user: user)
                 } else {
                     Auth.auth().createUser(withEmail: email, password: pass, completion: { (user, error) in
                         if error != nil {
                             let appereance = ToastView.appearance()
                             appereance.bottomOffsetPortrait = 90
-                            Toast(text: "Wrong password..", duration: Delay.long).show()
+                            Toast(text: "Not email or wrong password..", duration: Delay.long).show()
                             self.emailField.text = ""
                             self.passwordField.text = ""
                             print("Unable to authenticate with Firebase using email")
                         } else {
                             print("New user was created and authenticated with Firebase using email")
+                            self.completeSignIn(user: user)
                         }
                     })
                 }
             })
         }
+    }
+    
+    func completeSignIn(user: User?) {
+        if let user = user {
+            let keychain = KeychainWrapper.standard.set(user.uid, forKey: KEY_UID)
+            print("Data saved to keychain: \(keychain)")
+            performSegue(withIdentifier: "DirectToFeed", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
     }
     
 }
