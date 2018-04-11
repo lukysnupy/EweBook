@@ -289,6 +289,7 @@
                                                                         </label>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty-heart" translatesAutoresizingMaskIntoConstraints="NO" id="fmy-8y-5Hu">
                                                                             <rect key="frame" x="263" y="0.0" width="50" height="50"/>
+                                                                            <gestureRecognizers/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="50" id="J63-ba-tlD"/>
                                                                                 <constraint firstAttribute="height" constant="50" id="oae-iO-fEe"/>
@@ -385,7 +386,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8Q-dE-csy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="kXw-YT-oID">
                     <connections>
-                        <action selector="addImagePressed:" destination="eZV-3Q-qaB" id="WNL-0p-Wcj"/>
+                        <action selector="addImagePressed:" destination="eZV-3Q-qaB" id="YDw-vx-PeT"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

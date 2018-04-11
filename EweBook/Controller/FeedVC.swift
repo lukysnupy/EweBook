@@ -91,21 +91,25 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         print("Image was successfully uploaded to Firebase Storage")
                         let postDict: Dictionary<String, Any> = [
                             "caption": caption as Any,
-                            "imageUrl": metadata?.downloadURL()?.absoluteString as Any]
+                            "imageUrl": metadata?.downloadURL()?.absoluteString as Any,
+                            "user": DataService.dataSer.CURRENT_UID]
                         self.postToFirebase(post: postDict, uid: uid)
                     }
                 })
             }
         } else {
-            let postDict: Dictionary<String, Any> = ["caption": caption as Any]
+            let postDict: Dictionary<String, Any> = ["caption": caption as Any,
+                                                     "user": DataService.dataSer.CURRENT_UID]
             self.postToFirebase(post: postDict, uid: uid)
         }
     }
     
     func postToFirebase(post: Dictionary<String, Any>, uid: String) {
         let firebasePost = DataService.dataSer.REF_POSTS.child(uid)
-        
         firebasePost.updateChildValues(post)
+        
+        let userPostsRef = DataService.dataSer.REF_USER_CURRENT.child("posts")
+        userPostsRef.updateChildValues([uid: true])
         
         imageSelected = false
         postImage.image = UIImage(named: "add-image")

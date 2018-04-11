@@ -100,10 +100,12 @@ class SignInVC: UIViewController {
     
     func completeSignIn(user: User?, provider: String?) {
         if let user = user {
+            var nickname = user.email
+            nickname = String(describing: nickname?[..<(nickname?.index(of: "@"))!])
             if let provider = provider {
-                DataService.dataSer.createFireDBUser(uid: user.uid, provider: provider)
+                DataService.dataSer.createFireDBUser(uid: user.uid, provider: provider, nick: nickname!)
             } else {
-                DataService.dataSer.createFireDBUser(uid: user.uid, provider: user.providerID)
+                DataService.dataSer.createFireDBUser(uid: user.uid, provider: user.providerID, nick: nickname!)
             }
             let keychainResult = KeychainWrapper.standard.set(user.uid, forKey: KEY_UID)
             print("Data saved to keychain: \(keychainResult)")
