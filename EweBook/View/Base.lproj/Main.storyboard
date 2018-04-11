@@ -299,7 +299,7 @@
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4-20" translatesAutoresizingMaskIntoConstraints="NO" id="Nbi-8I-aAY">
                                                                     <rect key="frame" x="0.0" y="58" width="313" height="155"/>
                                                                 </imageView>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Go and celebrate my birthday on 4/20" translatesAutoresizingMaskIntoConstraints="NO" id="7JP-8I-Vc0">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Go and celebrate my birthday on 4/20" translatesAutoresizingMaskIntoConstraints="NO" id="7JP-8I-Vc0">
                                                                     <rect key="frame" x="0.0" y="221" width="313" height="50"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>

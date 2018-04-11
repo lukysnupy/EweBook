@@ -19,6 +19,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
+    var imageSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             postImage.image = image
+            imageSelected = true
         } else {
             print("No valid image selected")
         }
@@ -69,8 +71,50 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     @IBAction func postBtnPressed(_ sender: Any) {
+        guard let caption = postCaption.text, caption != "" else {
+            print("Captions wasn't entered")
+            return
+        }
         
+        let uid = NSUUID().uuidString
+        
+        if let img = postImage.image, imageSelected {
+            if let imgData = UIImageJPEGRepresentation(img, 0.2) {
+                
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                
+                DataService.dataSer.REF_POST_IMAGES.child(uid).putData(imgData, metadata: metadata, completion: { (metadata, error) in
+                    if error != nil {
+                        print("Unable to upload image to Firebase Storage")
+                    } else {
+                        print("Image was successfully uploaded to Firebase Storage")
+                        let postDict: Dictionary<String, Any> = [
+                            "caption": caption as Any,
+                            "imageUrl": metadata?.downloadURL()?.absoluteString as Any]
+                        self.postToFirebase(post: postDict, uid: uid)
+                    }
+                })
+            }
+        } else {
+            let postDict: Dictionary<String, Any> = ["caption": caption as Any]
+            self.postToFirebase(post: postDict, uid: uid)
+        }
     }
+    
+    func postToFirebase(post: Dictionary<String, Any>, uid: String) {
+        let firebasePost = DataService.dataSer.REF_POSTS.child(uid)
+        
+        firebasePost.updateChildValues(post)
+        
+        imageSelected = false
+        postImage.image = UIImage(named: "add-image")
+        postCaption.text = ""
+        
+        view.endEditing(true)
+        tableView.reloadData()
+    }
+    
     
     @IBAction func addImagePressed(_ sender: Any) {
         present(imagePicker, animated: true, completion: nil)

@@ -37,8 +37,6 @@ class SignInVC: UIViewController {
     func initBah() {
         let path = Bundle.main.path(forResource: "bah", ofType: "wav")
         do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(AVAudioSessionCategoryPlayback)
             musicPlayer = try AVAudioPlayer(contentsOf: URL(string: path!)!)
             musicPlayer.prepareToPlay()
         } catch let err as NSError {

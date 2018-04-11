@@ -24,6 +24,7 @@ class FeedCell: UITableViewCell {
         likesCount.text = "\(post.likes)"
         
         if let url = post.imageUrl {
+            self.postImg.isHidden = false
             if let img = FeedVC.imageCache.object(forKey: url as NSString) {
                 self.postImg.image = img
             } else {
