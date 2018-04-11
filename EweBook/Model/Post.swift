@@ -15,6 +15,7 @@ class Post {
     private var _imageUrl: String!
     private var _likes: Int!
     private var _postKey: String!
+    private var _userId: String!
     
     private var postRef: DatabaseReference!
     
@@ -34,6 +35,10 @@ class Post {
         return _postKey
     }
     
+    var userId: String {
+        return _userId
+    }
+    
     init(postKey: String, postData: Dictionary<String, Any>) {
         self._postKey = postKey
         
@@ -47,6 +52,10 @@ class Post {
         
         if let likes = postData["likes"] as? Int {
             self._likes = likes
+        }
+        
+        if let userId = postData["user"] as? String {
+            self._userId = userId
         }
         
         postRef = DataService.dataSer.REF_POSTS.child(postKey)

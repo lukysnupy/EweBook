@@ -21,7 +21,6 @@ class FeedCell: UITableViewCell {
     private var post: Post!
     private var liked = false
     private let likesRef = DataService.dataSer.REF_USER_CURRENT.child("likes")
-    private let postsRef = DataService.dataSer.REF_USER_CURRENT.child("posts")
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +35,34 @@ class FeedCell: UITableViewCell {
         self.post = post
         postCaption.text = post.caption
         likesCount.text = "\(post.likes)"
+        
+        let userRef = DataService.dataSer.REF_USERS.child(post.userId)
+        userRef.observeSingleEvent(of: .value) { (snapshot) in
+            if let user = snapshot.value as? Dictionary<String,Any> {
+                if let nick = user["nick"] as? String {
+                    self.username.text = nick
+                }
+            }
+        }
+        
+        if let img = FeedVC.profImgCache.object(forKey: post.userId as NSString) {
+            self.userThumb.image = img
+        } else {
+            let profImgRef = DataService.dataSer.REF_USER_IMAGES.child("\(post.userId).jpg")
+            profImgRef.getData(maxSize: 2 * 1024 * 1024) { (data, error) in
+                if error != nil {
+                    print("Profile picture can't be downloaded or doesn't exist: \(error.debugDescription)")
+                } else {
+                    print("Profile picture downloaded")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            self.userThumb.image = img
+                            FeedVC.profImgCache.setObject(img, forKey: post.userId as NSString)
+                        }
+                    }
+                }
+            }
+        }
         
         if let url = post.imageUrl {
             self.postImg.isHidden = false
