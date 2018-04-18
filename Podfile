@@ -13,5 +13,6 @@ target 'EweBook' do
   pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'  
   pod 'Toaster'
+  pod 'IQKeyboardManagerSwift'
 
 end
